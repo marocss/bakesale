@@ -1,34 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Text, Image, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, Image, StyleSheet, View } from 'react-native';
 
 import { priceDisplay } from '../util';
 
-export default class DealItem extends Component {
+export default class DealDetail extends Component {
   static propTypes = {
-    deal: PropTypes.object.isRequired,
-    onPress: PropTypes.func.isRequired,
+    initialDealData: PropTypes.object.isRequired,
   };
 
-  handlePress = () => {
-    this.props.onPress(this.props.deal.key);
+  state = {
+    deal: this.props.initialDealData,
   };
 
   render() {
-    const { deal } = this.props;
+    const { deal } = this.state;
     return (
-      <TouchableOpacity onPress={this.handlePress} style={styles.deal}>
+      <View style={styles.deal}>
         <Image style={styles.image} source={{ uri: deal.media[0] }} />
 
         <View style={styles.info}>
           <Text style={styles.title}>{deal.title}</Text>
           <View style={styles.footer}>
-            <Text style={styles.cause}>{deal.cause.name}</Text>
+            <Text style={styles.name}>{deal.cause.name}</Text>
             <Text style={styles.price}>{priceDisplay(deal.price)}</Text>
           </View>
         </View>
-      </TouchableOpacity>
+        <Text>....</Text>
+      </View>
     );
   }
 }
@@ -36,7 +36,7 @@ export default class DealItem extends Component {
 const styles = StyleSheet.create({
   deal: {
     marginHorizontal: 12,
-    marginTop: 12,
+    marginTop: 50,
   },
   image: {
     width: '100%',
