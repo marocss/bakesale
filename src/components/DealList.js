@@ -13,8 +13,7 @@ export default class DealList extends Component {
       <View style={styles.list}>
         <FlatList
           data={this.props.deals}
-          renderItem={({ item }) => <Text>{item.title}</Text>}
-          // renderItem={({ item }) => <DealItem deal={item} />}
+          renderItem={({ item }) => <DealItem deal={item} />}
         />
       </View>
     );
