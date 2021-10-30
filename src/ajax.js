@@ -4,9 +4,8 @@ export default {
   async fetchInitialDeals() {
     try {
       const response = await fetch(apiHost + '/api/deals');
-      console.log(response);
 
-      const responseJson = await JSON.parse(response);
+      const responseJson = await response.json();
 
       return responseJson;
     } catch (error) {
