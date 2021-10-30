@@ -10,11 +10,8 @@ class App extends React.Component {
 
   async componentDidMount() {
     const deals = await ajax.fetchInitialDeals();
-    // console.log('deals: ', deals);
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState(prevState => {
-      return { deals };
-    });
+    this.setState({ deals });
   }
 
   render() {
