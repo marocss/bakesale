@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Text, Image, StyleSheet, View } from 'react-native';
+import { Text, Image, StyleSheet, View, TouchableOpacity } from 'react-native';
 
 import { priceDisplay } from '../util';
 import ajax from '../ajax';
@@ -9,6 +9,7 @@ import ajax from '../ajax';
 export default class DealDetail extends Component {
   static propTypes = {
     initialDealData: PropTypes.object.isRequired,
+    onBack: PropTypes.func.isRequired,
   };
 
   state = {
@@ -28,16 +29,22 @@ export default class DealDetail extends Component {
 
     return (
       <View style={styles.deal}>
+        <TouchableOpacity onPress={this.props.onBack}>
+          <Text style={styles.backButton}>Back</Text>
+        </TouchableOpacity>
+
         <Image source={{ uri: deal.media[0] }} style={styles.image} />
         <View style={styles.detail}>
           <View>
             <Text style={styles.title}>{deal.title}</Text>
           </View>
+
           <View style={styles.footer}>
             <View style={styles.info}>
               <Text style={styles.price}>{priceDisplay(deal.price)}</Text>
               <Text style={styles.cause}>{deal.cause.name}</Text>
             </View>
+
             {deal.user && (
               <View style={styles.user}>
                 <Image
@@ -48,6 +55,7 @@ export default class DealDetail extends Component {
               </View>
             )}
           </View>
+
           <View style={styles.description}>
             <Text>{deal.description}</Text>
           </View>
@@ -61,8 +69,6 @@ const styles = StyleSheet.create({
   deal: {
     marginHorizontal: 12,
     marginTop: 50,
-    borderColor: '#bbb',
-    borderWidth: 1,
   },
   image: {
     width: '100%',
@@ -72,7 +78,10 @@ const styles = StyleSheet.create({
   info: {
     alignItems: 'center',
   },
-  detail: {},
+  detail: {
+    borderColor: '#bbb',
+    borderWidth: 1,
+  },
   title: {
     fontSize: 16,
     padding: 10,
@@ -109,5 +118,10 @@ const styles = StyleSheet.create({
     borderStyle: 'dotted',
     margin: 10,
     padding: 10,
+  },
+  backButton: {
+    marginBottom: 8,
+    color: '#22f',
+    marginLeft: 10,
   },
 });

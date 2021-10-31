@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, StyleSheet, FlatList } from 'react-native';
@@ -19,6 +20,9 @@ export default class DealList extends Component {
           renderItem={({ item }) => (
             <DealItem deal={item} onPress={onItemPress} />
           )}
+          contentContainerStyle={{
+            paddingBottom: 55,
+          }}
         />
       </View>
     );
