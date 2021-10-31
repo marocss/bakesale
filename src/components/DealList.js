@@ -10,12 +10,14 @@ export default class DealList extends Component {
   };
 
   render() {
+    const { deals, onItemPress } = this.props;
+
     return (
       <View style={styles.list}>
         <FlatList
-          data={this.props.deals}
+          data={deals}
           renderItem={({ item }) => (
-            <DealItem deal={item} onPress={this.props.onItemPress} />
+            <DealItem deal={item} onPress={onItemPress} />
           )}
         />
       </View>

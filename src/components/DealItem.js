@@ -17,6 +17,7 @@ export default class DealItem extends Component {
 
   render() {
     const { deal } = this.props;
+
     return (
       <TouchableOpacity onPress={this.handlePress} style={styles.deal}>
         <Image style={styles.image} source={{ uri: deal.media[0] }} />
