@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  Easing,
+  Dimensions,
+} from 'react-native';
 import ajax from '../ajax';
 import DealDetail from './DealDetail';
 import DealList from './DealList';
@@ -15,11 +22,20 @@ class App extends React.Component {
   };
 
   animateTitle = (direction = 1) => {
-    Animated.spring(this.titleXPos, {
-      toValue: direction * 100,
+    console.log('animating...');
+    const titleSize = 154;
+    const width = Dimensions.get('window').width - titleSize;
+
+    Animated.timing(this.titleXPos, {
+      toValue: direction * (width / 2),
       useNativeDriver: false,
-    }).start(() => {
-      this.animateTitle(-1 * direction);
+      duration: 1000,
+      easing: Easing.ease,
+    }).start(({ finished }) => {
+      if (finished) {
+        // stop animation on unmount
+        this.animateTitle(-1 * direction);
+      }
     });
   };
 
@@ -34,9 +50,9 @@ class App extends React.Component {
     //     useNativeDriver: false,
     //   }).start();
     // });
-    // const deals = await ajax.fetchInitialDeals();
-    // // eslint-disable-next-line react/no-did-mount-set-state
-    // this.setState({ deals });
+    const deals = await ajax.fetchInitialDeals();
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({ deals });
   }
 
   setCurrentDeal = dealId => {
