@@ -12,12 +12,11 @@ import {
   Dimensions,
   Button,
   Linking,
+  ScrollView,
 } from 'react-native';
 
 import { priceDisplay } from '../util';
 import ajax from '../ajax';
-
-// TODO: challenge: if swipe on deal title or description switch to next/previous deal (same logic as image)
 
 export default class DealDetail extends Component {
   imageXPos = new Animated.Value(0);
@@ -112,11 +111,10 @@ export default class DealDetail extends Component {
           style={[styles.image, { left: this.imageXPos }]}
           {...this.imagePanResponder.panHandlers}
         />
-        <View style={styles.detail}>
-          <View>
-            <Text style={styles.title}>{deal.title}</Text>
-          </View>
-
+        <View>
+          <Text style={styles.title}>{deal.title}</Text>
+        </View>
+        <ScrollView style={styles.detail}>
           <View style={styles.footer}>
             <View style={styles.info}>
               <Text style={styles.price}>{priceDisplay(deal.price)}</Text>
@@ -138,7 +136,7 @@ export default class DealDetail extends Component {
             <Text>{deal.description}</Text>
           </View>
           <Button title="Buy this deal!" onPress={this.openDealUrl} />
-        </View>
+        </ScrollView>
       </View>
     );
   }
@@ -148,6 +146,7 @@ const styles = StyleSheet.create({
   deal: {
     // marginHorizontal: 12,
     marginTop: 50,
+    // marginBottom: 20,
   },
   image: {
     width: '100%',
@@ -160,6 +159,7 @@ const styles = StyleSheet.create({
   detail: {
     // borderColor: '#bbb',
     // borderWidth: 1,
+    paddingBottom: 50,
   },
   title: {
     fontSize: 16,

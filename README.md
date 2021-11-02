@@ -13,6 +13,7 @@
 * [ ] update to functional components 
 * [ ] update layout
 * [ ] add react navigation
+* [ ] swipe on deal title or description on deal detail screen to switch to next/previous deal
 
 ## Acknowledgments
 > This project is from the course React Native Essential Training on LinkedIn inlearning platform by the instructor Samer Buna.
