@@ -144,9 +144,9 @@ export default class DealDetail extends Component {
 
 const styles = StyleSheet.create({
   deal: {
-    // marginHorizontal: 12,
-    marginTop: 50,
-    // marginBottom: 20,
+    flex: 1,
+    paddingTop: 50,
+    paddingBottom: 50,
   },
   image: {
     width: '100%',
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   detail: {
     // borderColor: '#bbb',
     // borderWidth: 1,
-    paddingBottom: 50,
+    // marginBottom: 50,
   },
   title: {
     fontSize: 16,
