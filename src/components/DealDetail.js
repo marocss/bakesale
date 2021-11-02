@@ -15,30 +15,64 @@ import {
 import { priceDisplay } from '../util';
 import ajax from '../ajax';
 
+// TODO: challenge: if swipe on deal title or description switch to next/previous deal (same logic as image)
+
 export default class DealDetail extends Component {
   imageXPos = new Animated.Value(0);
 
   imagePanResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
+
     onPanResponderMove: (event, gestureState) => {
       console.log('moving..', gestureState.dx);
       this.imageXPos.setValue(gestureState.dx);
     },
+
     onPanResponderRelease: (event, gestureState) => {
       console.log('released');
-      const width = Dimensions.get('window').width;
+      this.width = Dimensions.get('window').width;
 
-      if (Math.abs(gestureState.dx) > width * 0.4) {
+      if (Math.abs(gestureState.dx) > this.width * 0.35) {
         const direction = Math.sign(gestureState.dx); // -1 = swipe left, +1 = swipe right
 
         Animated.timing(this.imageXPos, {
-          toValue: direction * width,
+          toValue: direction * this.width,
           useNativeDriver: false,
           duration: 300,
+        }).start(() => this.handleSwipe(-1 * direction));
+      } else {
+        // reset if swipe was less than 35%
+        Animated.spring(this.imageXPos, {
+          toValue: 0,
+          useNativeDriver: false,
         }).start();
       }
     },
   });
+
+  handleSwipe = indexDirection => {
+    if (!this.state.deal.media[this.state.imageIndex + indexDirection]) {
+      Animated.spring(this.imageXPos, {
+        toValue: 0,
+        useNativeDriver: false,
+      }).start();
+      return;
+    }
+
+    this.setState(
+      prevState => ({
+        imageIndex: prevState.imageIndex + indexDirection,
+      }),
+      () => {
+        // start next image animation
+        this.imageXPos.setValue(indexDirection * this.width);
+        Animated.spring(this.imageXPos, {
+          toValue: 0,
+          useNativeDriver: false,
+        }).start();
+      },
+    );
+  };
 
   static propTypes = {
     initialDealData: PropTypes.object.isRequired,
