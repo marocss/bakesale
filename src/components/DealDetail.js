@@ -67,20 +67,20 @@ export default class DealDetail extends Component {
 
 const styles = StyleSheet.create({
   deal: {
-    marginHorizontal: 12,
+    // marginHorizontal: 12,
     marginTop: 50,
   },
   image: {
     width: '100%',
     height: 150,
-    backgroundColor: '#ccc',
+    // backgroundColor: '#ccc',
   },
   info: {
     alignItems: 'center',
   },
   detail: {
-    borderColor: '#bbb',
-    borderWidth: 1,
+    // borderColor: '#bbb',
+    // borderWidth: 1,
   },
   title: {
     fontSize: 16,
@@ -122,6 +122,6 @@ const styles = StyleSheet.create({
   backButton: {
     marginBottom: 8,
     color: '#22f',
-    marginLeft: 10,
+    marginLeft: 12,
   },
 });
