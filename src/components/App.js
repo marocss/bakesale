@@ -1,21 +1,42 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Animated } from 'react-native';
 import ajax from '../ajax';
 import DealDetail from './DealDetail';
 import DealList from './DealList';
 import SearchBar from './SearchBar';
 
 class App extends React.Component {
+  titleXPos = new Animated.Value(0);
+
   state = {
     deals: [],
     dealsFromSearch: [],
     currentDealId: null,
   };
 
+  animateTitle = (direction = 1) => {
+    Animated.spring(this.titleXPos, {
+      toValue: direction * 100,
+      useNativeDriver: false,
+    }).start(() => {
+      this.animateTitle(-1 * direction);
+    });
+  };
+
   async componentDidMount() {
-    const deals = await ajax.fetchInitialDeals();
-    // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({ deals });
+    this.animateTitle();
+    // Animated.spring(this.titleXPos, {
+    //   toValue: 100,
+    //   useNativeDriver: false,
+    // }).start(() => {
+    //   Animated.spring(this.titleXPos, {
+    //     toValue: -100,
+    //     useNativeDriver: false,
+    //   }).start();
+    // });
+    // const deals = await ajax.fetchInitialDeals();
+    // // eslint-disable-next-line react/no-did-mount-set-state
+    // this.setState({ deals });
   }
 
   setCurrentDeal = dealId => {
@@ -69,9 +90,9 @@ class App extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, { left: this.titleXPos }]}>
         <Text style={styles.header}>Bakesale</Text>
-      </View>
+      </Animated.View>
     );
   }
 }
